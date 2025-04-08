@@ -11,7 +11,7 @@ const Nav = () => {
                         <img src={logo} alt="" />
                     </div>
                     <div className="flex justify-between items-center w-full">
-                        <div id="left" className="flex">
+                        <div id="left" className="flex gap-4">
                             <p className="flex items-center"><IoLocationOutline />Find A Store</p>
                             <p>Opened Until <span className="text-blue-800 font-bold">9PM</span></p>
                         </div>
