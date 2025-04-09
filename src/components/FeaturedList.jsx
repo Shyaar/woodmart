@@ -4,19 +4,12 @@ import Button from "./ui/button";
 
 const FeaturedCard = ({ handleAdd, data }) => {
 
-    console.log(data)
-
     function handlePlus(id) {
-        console.log(document.getElementById(id))
+        
         let toAdd = document.getElementById(id)
         let toAddVal = Number(toAdd.textContent)
         toAddVal += 1
         toAdd.textContent = toAddVal
-        console.log(typeof (toAddVal))
-
-        console.log(typeof (toAdd))
-        console.log("plus")
-        console.log(id)
     }
 
     function handleMinus(id) {
@@ -26,14 +19,6 @@ const FeaturedCard = ({ handleAdd, data }) => {
         toAddVal == 0 ? toAddVal = 0 : toAddVal -= 1
 
         toAdd.textContent = toAddVal
-        console.log(typeof (toAddVal))
-
-        console.log(typeof (toAdd))
-        console.log("plus")
-        console.log(id)
-
-        console.log("minus")
-        console.log(id)
     }
 
     return (
@@ -52,7 +37,7 @@ const FeaturedCard = ({ handleAdd, data }) => {
                             <div className="mx-1">
                                 <span className=" text-white flex gap-3 py-1 px-2">
                                     <span onClick={() => handleMinus((`buyId-${data.id}`))}>-</span>
-                                    <span id={`buyId-${data.id}`} className="">0</span>
+                                    <span id={`buyId-${data.id}`} className="">1</span>
                                     <span onClick={() => handlePlus((`buyId-${data.id}`))}>+</span>
                                 </span>
                             </div>

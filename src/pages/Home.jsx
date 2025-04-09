@@ -11,6 +11,9 @@ import { useState, useEffect } from "react";
 
 const Home = () => {
     const [data, setData] = useState(null)
+    const [numberToBuy, setNumberToBuy] = useState(1)
+
+
     useEffect(() => {
         const getData = async () => {
             const response = await fetch('https://fakestoreapi.com/products')
@@ -41,29 +44,51 @@ const Home = () => {
         console.log('clicked')
         console.log(id)
 
-        let added = data.find(data => data.id == id)
-        console.log(added)
-        setCart((prevCart) => {
-            let newCart = [...prevCart, added]
-            return newCart
-        })
+
+        let found = cart.find(cart => cart.id == id)
 
 
+        if (found) {
+            let indexOfFound = cart.indexOf(found)
+            console.log(indexOfFound)
+            console.log(found)
+            // console.log(document.getElementById(id))
+            // let toAdd = document.getElementById(id)
+            // let toAddVal = Number(toAdd.textContent)
+            // toAddVal += 1
+            // toAdd.textContent = toAddVal
+            // console.log(typeof (toAddVal))
 
+            let numToBuy = Number(document.getElementById(`numToBuy-${id}`).textContent)
+            setNumberToBuy((prevNum) => prevNum + numToBuy)
+            
+            console.log(numToBuy)
+            console.log(cart[indexOfFound].price)
+            cart[indexOfFound].price = cart[indexOfFound].price * numberToBuy
+        }
 
+        else {
+            let added = data.find(data => data.id == id)
+
+            let numToBuy = Number(document.getElementById(`buyId-${id}`).textContent)
+            setNumberToBuy(numToBuy)
+            console.log(numToBuy)
+            console.log(added.price)
+            
+            added.price = added.price * numToBuy
+            console.log(added.price)
+
+            
+
+            setCart((prevCart) => {
+                let newCart = [...prevCart, added]
+                return newCart
+            })
+
+        }
 
         let count = document.getElementById('cartCount')
         count.textContent = cart.length
-
-        console.log(cart)
-        console.log(cart.length)
-
-        let numberToBuy = document.getElementById(`buyId-${id}`)
-        
-        console.log(numberToBuy)
-
-
-
     }
 
     function handleRemove(data) {
@@ -73,12 +98,12 @@ const Home = () => {
         console.log(cart)
 
 
-        setCart(removed) 
+        setCart(removed)
     }
 
 
     let totalItems = cart.map(cart => cart.price)
-    console.log(totalItems)
+
 
     let totalPrice = 0
 
@@ -89,7 +114,8 @@ const Home = () => {
             return acc + val
         })
     }
-    console.log(totalPrice)
+
+    
 
 
     return (
@@ -164,7 +190,7 @@ const Home = () => {
                     </div>
                     <div className="overflow-y-auto ">
                         {cart && cart.map((cart) => (
-                            <div className="">
+                            <div id={`cart-${cart.id}`} key={cart.id} className="">
                                 <div className="flex w-full items-center justify-between my-4 border-b p-1  ">
                                     <div key={cart.id} id="left" className="flex items-center">
                                         <div id="image" className="w-[70px] h-[70px] border flex items-center justify-center">
@@ -178,13 +204,15 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div id="bottom" className="flex w-full justify-between">
-                                <p className="font-bold text-[20px] border-b text-right w-full">${cart.price}</p> 
-                                    {/* <div id="number">
-                                       
-                                        </div> */}
-                                    {/* <div id="price">
-                                        <p className="font-bold text-[20px]">${cart.price}</p>
-                                    </div> */}
+
+                                    <div id="number">
+                                        <p id={`numToBuy-${cart.id}`}className="font-bold text-[20px]">{numberToBuy}</p>
+                                    </div>
+
+                                    <div id="price">
+                                        <p className="font-bold text-[20px] border-b text-right w-full">{cart.price}</p>
+                                    </div>
+
                                 </div>
                             </div>
                         ))}
